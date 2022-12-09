@@ -4,7 +4,7 @@ class CreateBeanieBabies < ActiveRecord::Migration[6.1]
       t.string :name
       t.date :dob
       t.text :poem
-      t.boolean :retired
+      t.string :pellets
       t.string :img
       t.integer :collector_id
       t.timestamps

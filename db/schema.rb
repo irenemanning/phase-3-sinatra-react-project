@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2022_10_09_023846) do
     t.string "name"
     t.date "dob"
     t.text "poem"
-    t.boolean "retired"
+    t.string "pellets"
     t.string "img"
     t.integer "collector_id"
     t.datetime "created_at", precision: 6, null: false

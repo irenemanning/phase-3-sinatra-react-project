@@ -1,42 +1,47 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
-  # Add your routes here
-
-  #all beanies
-  get "/beaniebabies" do
-    beanie_babies = BeanieBaby.all
-    beanie_babies.to_json
-  end
-
-  #all collectors 
   get "/collectors" do
-    collectors = Collector.all
-    collectors.to_json
+    collectors = Collector.all.order(:name)
+    collectors.to_json(include: :beanie_babies)
+  end
+  #CREATE collector 
+  post "/collectors" do
+    collector = Collector.create(
+      name: params[:name],
+      dob: params[:dob]
+    )
+    collector.to_json(include: :beanie_babies)
+  end
+  #DELETE collector
+  delete "/collectors/:id" do
+    collector = Collector.find(params[:id]).destroy
+  end
+  #CREATE create new beanie for collector's collection
+  post "/collectors/:id" do
+    collector = Collector.find(params[:id])
+    beanie_baby = BeanieBaby.create(
+      name: params[:name],
+      dob: params[:dob],
+      poem: params[:poem],
+      pellets: params[:pellets],
+      img: params[:img],
+      collector_id: params[:id]
+    )
+    beanie_baby.to_json
+  end
+#UPDATE Edit beanie babies poem
+  patch "/collectors/:id" do 
+    beanie = BeanieBaby.find(params[:id])
+    beanie.update(
+      poem: params[:poem]
+    )
+    beanie.to_json
+  end
+  #DELETE beanie from collector's collection
+  delete "/beaniebabies/:id" do
+    beanie_baby = BeanieBaby.find(params[:id])
+    beanie_baby.destroy
   end
 
-#create beanie
-post "/beaniebabies" do
-  beanie_baby = BeanieBaby.create(
-    name: params[:name],
-    dob: params[:dob],
-    poem: params[:poem],
-    retired: params[:retired],
-    img: params[:img]
-  )
-  beanie_baby.to_json
-end
-
-#delete beanie
-delete "/beaniebabies/:id" do
-  beanie_baby = BeanieBaby.find(params[:id])
-  beanie_baby.destroy
-  beanie_baby.to_json
-end
-
-# #get beanies by birthdate
-#   get "/beaniebabies/:birthday" do
-#   beanie_baby = BeanieBaby.find_by(params[:birthday])
-#   beanie_baby.to_json
-#   end
 end
