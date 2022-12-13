@@ -31,7 +31,7 @@ beanie1, beanie2, beanie3, beanie4 = BeanieBaby.create([
     }
 ])
 
- collector1, collector2, collector3  = Collector.create(][
+ collector1, collector2, collector3  = Collector.create([
     {
         name: "Irene",
         dob: "1998-09-17"
