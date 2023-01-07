@@ -18,7 +18,7 @@ class ApplicationController < Sinatra::Base
     collector = Collector.find(params[:id]).destroy
   end
   #CREATE create new beanie for collector's collection
-  post "/collectors/:id" do
+  post "/beaniebabies/:id" do
     collector = Collector.find(params[:id])
     beanie_baby = BeanieBaby.create(
       name: params[:name],
@@ -31,7 +31,7 @@ class ApplicationController < Sinatra::Base
     beanie_baby.to_json
   end
 #UPDATE Edit beanie babies poem
-  patch "/collectors/:id" do 
+  patch "/beaniebabies/:id" do 
     beanie = BeanieBaby.find(params[:id])
     beanie.update(
       poem: params[:poem]
